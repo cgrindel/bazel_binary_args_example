@@ -1,0 +1,14 @@
+genrule(
+    name = "my_generated_data",
+    outs = ["my_generated_data.txt"],
+    cmd = """\
+echo "Hello" > $@
+""",
+)
+
+sh_binary(
+    name = "my_tool",
+    srcs = ["my_tool.sh"],
+    args = ["$(rootpath :my_generated_data)"],
+    data = [":my_generated_data"],
+)
